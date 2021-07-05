@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 // /const cors = require("cors")
 // /const morgan = require("morgan");
-//const {connection} = require("./db")
+const {connection} = require("./db")
 
 
 //Routers
@@ -14,7 +14,7 @@ const admin = require("./Route/admin");
 
 
 //connecting to database
-//connection();
+connection();
 
 
 app.use(express.json());
