@@ -28,7 +28,7 @@
   "scripts": {
     "devstart": "nodemon app.js",
     "test": "mocha test --recursive --exit",
-    "start": "node /app/app.js"
+    "start": "node app.js"
   },
   "engines": {
     "node": "14.x",

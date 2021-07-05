@@ -1,8 +1,8 @@
 //const {api} = require("./helpers/keys");
 const express = require("express");
 const app = express();
-const cors = require("cors")
-const morgan = require("morgan");
+// /const cors = require("cors")
+// /const morgan = require("morgan");
 //const {connection} = require("./db")
 
 
@@ -18,7 +18,7 @@ const admin = require("./Route/admin");
 
 
 app.use(express.json());
-app.use(cors())
+//app.use(cors())
 app.use(`/`,home);
 app.use(`/`,users);
 app.use(`/`,admin);
