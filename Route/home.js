@@ -1,8 +1,7 @@
 const express = require("express");
 const Router = express.Router();
+const home = require("../controllers/home")
 
-Router.get('/',(req,res)=>{
-    res.json("welcome Home")
-})
+Router.get('/',home.home)
 
 module.exports = Router;

@@ -31,6 +31,3 @@ const home = require("./Route/home");
 //
 PORT= 5000 || process.env.PORT;
 app.listen(PORT,console.log(`App Running on ${PORT}`));
-
-module.exports = app;
-
