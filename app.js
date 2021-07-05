@@ -29,7 +29,7 @@ app.use((error, req, res, next) => {
   });
   
 
-PORT = process.env.PORT;
+PORT= process.env.PORT;
 app.listen(PORT,console.log(`App Running on ${PORT}`));
 
 module.exports = app;
