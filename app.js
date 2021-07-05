@@ -1,4 +1,4 @@
-//const {api} = require("./helpers/keys");
+const {api} = require("./helpers/keys");
 const express = require("express");
 const app = express();
 // /const cors = require("cors")
@@ -19,9 +19,9 @@ const admin = require("./Route/admin");
 
 app.use(express.json());
 //app.use(cors())
-app.use(`/`,home);
-app.use(`/`,users);
-app.use(`/`,admin);
+app.use(`${api}/`,home);
+app.use(`${api}/`,users);
+app.use(`${api}/`,admin);
 
 //error handler
 app.use((error, req, res, next) => {
