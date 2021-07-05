@@ -1,9 +1,9 @@
-const {api} = require("./helpers/keys");
+//const {api} = require("./helpers/keys");
 const express = require("express");
 const app = express();
 const cors = require("cors")
 const morgan = require("morgan");
-const {connection} = require("./db")
+//const {connection} = require("./db")
 
 
 //Routers
@@ -14,14 +14,14 @@ const admin = require("./Route/admin");
 
 
 //connecting to database
-connection();
+//connection();
 
 
 app.use(express.json());
 app.use(cors())
-app.use(`${api}/`,home);
-app.use(`${api}/`,users);
-app.use(`${api}/`,admin);
+app.use(`/`,home);
+app.use(`/`,users);
+app.use(`/`,admin);
 
 //error handler
 app.use((error, req, res, next) => {
@@ -29,7 +29,7 @@ app.use((error, req, res, next) => {
   });
   
 
-PORT= process.env.PORT;
+PORT = process.env.PORT;
 app.listen(PORT,console.log(`App Running on ${PORT}`));
 
 module.exports = app;
