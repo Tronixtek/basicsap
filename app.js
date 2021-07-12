@@ -10,6 +10,8 @@ const {connection} = require("./db")
 const home = require("./Route/home");
 const users = require("./Route/user");
 const admin = require("./Route/admin");
+const articles = require("./Route/articles")
+const category = require("./Route/category")
 
 
 
@@ -22,6 +24,8 @@ app.use(express.json());
 app.use(`${api}/`,home);
 app.use(`${api}/`,users);
 app.use(`${api}/`,admin);
+app.use(`${api}/`,articles);
+app.use(`${api}/`,category);
 
 //error handler
 app.use((error, req, res, next) => {
@@ -29,7 +33,7 @@ app.use((error, req, res, next) => {
   });
   
 
-PORT = process.env.PORT;
+PORT = process.env.PORT || 5000;
 app.listen(PORT,console.log(`App Running on ${PORT}`));
 
 module.exports = app;

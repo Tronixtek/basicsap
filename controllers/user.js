@@ -11,7 +11,7 @@ exports.get_signup = async (req,res)=>{
 
 exports.post_signup = async (req,res)=>{
    const body = req.body;
-   if(!body.last_name || !body.first_name || !body.email || !body.password1 || !body.password2){
+   if(!body.username || !body.email || !body.password1 || !body.password2){
        res.status(301).json("Some Fields are missing. Fill all Required Fields")
    }
    if(body.password1 !== body.password2){
@@ -26,11 +26,10 @@ exports.post_signup = async (req,res)=>{
        var password = await bcrypt.hash(req.body.password1,10);
        var repass = await bcrypt.hash(req.body.password2,10);
        user = {
-         last_name:body.last_name,
-         first_name:body.first_name,
-         email:body.email,
-         password1:password,
-         password2:repass
+           username:body.username,
+           email:body.email,
+           password1:password,
+           password2:repass
        }
        try{
            var newUser = await new users(user).save();
@@ -53,7 +52,7 @@ exports.get_login = (req,res)=>{
 
 exports.post_login = async (req,res)=>{
    const body = req.body;
-   users.findOne({email:body.email}).then(
+  await users.findOne({email:body.email}).then(
        (user)=>{
            if(!user){
                return res.status(302).redirect("/api/v1/sign_up");
@@ -65,9 +64,9 @@ exports.post_login = async (req,res)=>{
                    }
                    else{
                      const token = jwt.sign(
-                        {email:user.email},
+                        {email:user.email,id:user._id},
                         Secret,
-                        {expiresIn:"1m"}
+                        {expiresIn:"200h"}
                     )
                     res.status(200).json({
                         firstname:user.first_name,
@@ -94,4 +93,51 @@ exports.post_login = async (req,res)=>{
        }
    )
    
+}
+
+
+exports.follow = (req,res)=>{
+    const bearerHeader = req.headers["authorization"];
+    const token = bearerHeader && bearerHeader.split(" ")[1]
+    let postBy = jwt.verify(token,Secret).id; 
+
+    users.findByIdAndUpdate(req.body.followId,{
+        $push:{followers:postBy}
+    },{new:true},(err,result)=>{
+        if(err){
+            res.status(422).json({
+                error:err
+            })  
+        }
+    users.findByIdAndUpdate(postBy,{
+        $push:{following:req.body.followId}
+    },{new:true}).then(result =>{
+        res.json(result)
+    }).catch( err =>{
+        return res.status(422).json({error:err})
+    })
+    })
+}
+
+exports.unfollow = (req,res)=>{
+    const bearerHeader = req.headers["authorization"];
+    const token = bearerHeader && bearerHeader.split(" ")[1]
+    let postBy = jwt.verify(token,Secret).id; 
+
+    users.findByIdAndUpdate(req.body.followId,{
+        $pull:{followers:postBy}
+    },{new:true},(err,result)=>{
+        if(err){
+            res.status(422).json({
+                error:err
+            })  
+        }
+    users.findByIdAndUpdate(postBy,{
+        $pull:{following:req.body.followId}
+    },{new:true}).then(result =>{
+        res.json(result)
+    }).catch( err =>{
+        return res.status(422).json({error:err})
+    })
+    })
 }

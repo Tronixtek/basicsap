@@ -12,6 +12,8 @@ Router.get(`/login`,User.get_login);
 
 Router.post(`/login`,User.post_login);
 
+Router.put(`/follow`,User.follow);
 
+Router.put(`/unfollow`,User.unfollow);
 
 module.exports = Router;

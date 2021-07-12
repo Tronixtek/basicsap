@@ -56,7 +56,7 @@ exports.admin_post_login = async (req,res)=>{
                      const token = jwt.sign(
                         {email:user.email},
                         Secret,
-                        {expiresIn:"5m"}
+                        {expiresIn:"200h"}
                     )
                     res.status(200).json({
                         admin_id:user.admin_id,
