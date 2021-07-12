@@ -14,7 +14,7 @@ exports.connection = async()=>{
       mockgoose.prepareStorage()
       .then(()=>{
         mongoose.connect(
-          mongouri, {
+          MongoUri, {
           useNewUrlParser:true, 
           useUnifiedTopology:true, 
           useCreateIndex:true
